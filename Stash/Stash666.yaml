@@ -1,0 +1,209 @@
+# >>=====================================<<
+# ||                                     ||
+# ||      ██████╗  ██████╗  ██████╗      ||
+# ||     ██╔════╝ ██╔════╝ ██╔════╝      ||
+# ||     ███████╗ ███████╗ ███████╗      ||
+# ||     ██╔═══██╗██╔═══██╗██╔═══██╗     ||
+# ||     ╚██████╔╝╚██████╔╝╚██████╔╝     ||
+# ||      ╚═════╝  ╚═════╝  ╚═════╝      ||
+# ||                                     ||
+# >>=====================================<<
+# 名称: Stash666 V1.2
+# 日期: 2024年11月22日
+# 地址: https://github.com/666OS
+# 频道: https://t.me/Pinched666
+
+proxy-providers:
+  服务提供商-1:
+    url: 机场订阅地址1
+    interval: 86400
+    benchmark-timeout: 300
+    benchmark-url: http://taobao.com
+    filter: ^(?!.*(群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))
+  服务提供商-2:
+    url: 机场订阅地址2
+    interval: 86400
+    benchmark-timeout: 300
+    benchmark-url: http://taobao.com
+    filter: ^(?!.*(群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author))
+
+log-level: warning
+mode: rule
+
+dns:
+  enable: true
+  ipv6: true
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter: ['+.lan', '+.local', 'rule-set:cn_domain,private_domain', '+.googlevideo.com']
+  default-nameserver: ['119.29.29.29', '180.184.1.1', '223.5.5.5']
+  nameserver: ['https://doh.pub/dns-query', 'https://dns.alidns.com/dns-query', 'https://[2606:4700:4700::1111]/dns-query']
+  nameserver-policy:
+    '+.googlevideo.com': 'https://[2606:4700:4700::1111]/dns-query'
+
+proxies:
+  - {name: 直连, type: direct, udp: true}
+
+proxy-groups:
+  - name: 一键连
+    type: select
+    proxies:
+      - 故障转移
+      - 香港自动
+      - 台湾自动
+      - 新加坡自动
+      - 日本自动
+      - 韩国自动
+      - 美国自动
+      - 直连
+    interval: 600
+    lazy: true
+    icon: https://ghp.ci/https://raw.githubusercontent.com/666OS/YYDS/main/mihomo/image/mihomo.png
+  - name: 故障转移
+    type: fallback
+    proxies:
+      - 香港自动
+      - 台湾自动
+      - 新加坡自动
+      - 日本自动
+      - 韩国自动
+      - 美国自动
+      - 直连
+    icon: https://ghp.ci/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ULB.png
+  - name: AI平台
+    type: select
+    proxies:
+      - 新加坡自动
+      - 台湾自动
+      - 日本自动
+      - 韩国自动
+      - 美国自动
+      - 直连
+    interval: 600
+    lazy: true
+    icon: https://ghp.ci/https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/ChatGPT-green.png
+  - name: Speedtest测速
+    type: select
+    proxies:
+      - 一键连
+      - 故障转移
+      - 香港自动
+      - 台湾自动
+      - 新加坡自动
+      - 日本自动
+      - 韩国自动
+      - 美国自动
+      - 直连
+    include-all: true
+    interval: 600
+    lazy: true
+    icon: https://ghp.ci/https://raw.githubusercontent.com/Orz-3/mini/master/Color/Speedtest.png
+  - name: 香港自动
+    type: url-test
+    include-all: true
+    filter: (?i)港|香港|🇭🇰|HK|Hong|HKG
+    interval: 600
+    lazy: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png
+  - name: 台湾自动
+    type: url-test
+    include-all: true
+    filter: (?i)台|台湾|🇼🇸|🇹🇼|TW|tai|TPE|TSA|KHH
+    interval: 600
+    lazy: true
+    icon: https://ghp.ci/https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TW.png
+  - name: 新加坡自动
+    type: url-test
+    include-all: true
+    filter: (?i)坡|新加坡|🇸🇬|SG|Sing|SIN|XSP
+    interval: 600
+    lazy: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png
+  - name: 日本自动
+    type: url-test
+    include-all: true
+    filter: (?i)日|日本|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK
+    interval: 600
+    lazy: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png
+  - name: 韩国自动
+    type: url-test
+    include-all: true
+    filter: (?i)韩|韩国|🇰🇷|韓|韓國|首尔|南朝鲜|KR|KOR|Korea|South
+    interval: 600
+    lazy: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png
+  - name: 美国自动
+    type: url-test
+    include-all: true
+    filter: (?i)美|美国|🇺🇸|US|USA|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD
+    interval: 600
+    lazy: true
+    icon: https://fastly.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png
+
+rule-providers:
+  XPTV:
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/XPTV.yaml
+  speedtest:
+    behavior: classical
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/speedtest.list
+  fix-direct:
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/fix-direct.yaml
+  category-ai-chat-!cn:
+    behavior: domain
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/category-ai-chat-!cn.list
+  private_domain:
+    behavior: domain
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/private.list
+  cn_domain:
+    behavior: domain
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/cn.list
+  private_ip:
+    behavior: ipcidr
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/private_ip.list
+  cn_ip:
+    behavior: ipcidr
+    format: text
+    interval: 86400
+    url: https://ghp.ci/https://github.com/666OS/YYDS/raw/main/mihomo/rules/cn_ip.list
+
+rules:
+  # 屏蔽 QUIC
+  - SCRIPT,quic,REJECT
+  # 常用必备
+  - DST-PORT,123,DIRECT
+  - IP-CIDR,95.161.76.100/31,REJECT-DROP,no-resolve
+  - RULE-SET,fix-direct,直连
+  - RULE-SET,XPTV,直连
+  - RULE-SET,private_ip,直连,no-resolve
+  - RULE-SET,speedtest,Speedtest测速
+  - DOMAIN-SUFFIX,pplx.ai,AI平台
+  - DOMAIN-SUFFIX,perplexity.com,AI平台
+  - DOMAIN-SUFFIX,perplexity.ai,AI平台
+  - RULE-SET,category-ai-chat-!cn,AI平台
+  - RULE-SET,cn_domain,直连
+  - DOMAIN-REGEX,^[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$,一键连
+  - RULE-SET,cn_ip,直连,no-resolve
+  - MATCH,一键连
+  
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+
